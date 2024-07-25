@@ -70,7 +70,7 @@ Alternatively, you can run the example from the [command line](https://docs.flut
 ## Development
 If all you modify are the Dart sources of the plugin, then the development setup is the same as the setup described under "Example" above.
 
-If you need to work on the `dart:ffi` bindings for `spine-cpp`, you will also need to install [Emscripten](https://emscripten.org/docs/getting_started/downloads.html).
+If you need ``to work on the `dart:ffi` bindings for `spine-cpp`, you will also need to install [Emscripten``](https://emscripten.org/docs/getting_started/downloads.html).
 
 To generate the bindings based on the `src/spine_flutter.h` header, run `dart run ffigen --config ffigen.yaml`. After the bindings have been generated, you must replace the line `import 'dart:ffi' as ffi;` with `import 'ffi_proxy.dart' as ffi;` in the file `src/spine_flutter_bindings_generated.dart`. Otherwise the bindings will not compile for the web.
 

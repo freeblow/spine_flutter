@@ -216,7 +216,6 @@ class SkeletonData {
     if (_bindings.spine_skeleton_data_result_get_error(result).address != nullptr.address) {
       final Pointer<Utf8> error = _bindings.spine_skeleton_data_result_get_error(result).cast();
       final message = error.toDartString();
-      print("SkeletonData fromJson error message: $message");
       _bindings.spine_skeleton_data_result_dispose(result);
       throw Exception("Couldn't load skeleton data: $message");
     }
@@ -3755,7 +3754,6 @@ class AnimationState {
             type = EventType.event;
             break;
         }
-        print("");
         final nativeEntry = _bindings.spine_animation_state_events_get_track_entry(_events, i);
         final entry = TrackEntry._(nativeEntry, this);
         final nativeEvent = _bindings.spine_animation_state_events_get_event(_events, i);
@@ -3805,6 +3803,7 @@ class AnimationState {
     final animation = animationName.toNativeUtf8(allocator: _allocator);
     final entry = _bindings.spine_animation_state_set_animation_by_name(_state, trackIndex, animation.cast(), loop ? -1 : 0);
     _allocator.free(animation);
+    if (entry.address == nullptr.address) print("Couldn't set animation $animationName");
     if (entry.address == nullptr.address) throw Exception("Couldn't set animation $animationName");
     return TrackEntry._(entry, this);
   }

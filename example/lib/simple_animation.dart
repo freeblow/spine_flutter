@@ -38,16 +38,40 @@ class SimpleAnimation extends StatelessWidget {
     reportLeaks();
     final controller = SpineWidgetController(onInitialized: (controller) {
       // Set the default mixing time between animations
-      controller.animationState.getData().setDefaultMix(0.2);
+      // controller.animationState.getData().setDefaultMix(0.2);
       // Set the portal animation on track 0
-      controller.animationState.setAnimationByName(0, "portal", true);
-      // Queue the run animation after the portal animation
-      controller.animationState.addAnimationByName(0, "run", true, 0);
+      controller.animationState.setAnimationByName(0, "shake", true);
+      // // Queue the run animation after the portal animation
+      // controller.animationState.addAnimationByName(0, "run", true, 0);
+      controller.animationState.setListener((EventType type, TrackEntry entry, Event? event){
+        print("animationState.setListener type: $type entry: ${entry.toString()} event: ${event?.toString()}");
+      });
     });
+    try{
+      return Scaffold(
+          appBar: AppBar(title: const Text('Simple Animation')),
+          // body: SpineWidget.fromAsset("assets/spineboy.atlas", "assets/spineboy-pro.json", controller)
+          backgroundColor: Colors.red,
+          body: Container(
+            alignment: Alignment.center,
+            child: Container(
+              width: 100,
+              height: 100,
+              child: SpineWidget.fromAsset("assets/skeleton.atlas", "assets/skeleton.json", controller),
+            ),
+          )
+      );
+    }catch(e){
+      return Scaffold(
+          appBar: AppBar(title: const Text('Simple Animation')),
+          // body: SpineWidget.fromAsset("assets/spineboy.atlas", "assets/spineboy-pro.json", controller)
+          backgroundColor: Colors.black,
+          body: Container(
+            alignment: Alignment.center,
+            child: Text(e.toString()),
+          )
+      );
+    }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Simple Animation')),
-      body: SpineWidget.fromAsset("assets/spineboy.atlas", "assets/spineboy-pro.skel", controller)
-    );
   }
 }
